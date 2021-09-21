@@ -29,17 +29,17 @@ class BuyController extends Controller
         if (empty($error)) {
             Buy::orderInsert($product_id, $email, $name);
             $successful[] = "Ваш заказ принят";
-//            $transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
-//            $transport->setUsername('user');
-//            $transport->setPassword('password');
-//            $transport->setEncryption('SSL');
-//            $mailer = new Swift_Mailer($transport);
-//            $message = new Swift_Message();
-//            $message->setSubject("Заказ в Геймсмаркете");
-//            $message->setFrom(['fromMail' => 'fromMail']);
-//            $message->addTo('toMail', 'toMail');
-//            $message->setBody("Пользователь с email " . $email . " , заказал игру с id - " . $product_id);
-//            $mailer->send($message);
+            /*$transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
+            $transport->setUsername('user');
+            $transport->setPassword('password');
+            $transport->setEncryption('SSL');
+            $mailer = new Swift_Mailer($transport);
+            $message = new Swift_Message();
+            $message->setSubject("Заказ в Геймсмаркете");
+            $message->setFrom(['fromMail' => 'fromMail']);
+            $message->addTo('toMail', 'toMail');
+            $message->setBody("Пользователь с email " . $email . " , заказал игру с id - " . $product_id);
+            $mailer->send($message);*/
             return redirect()->route('successful');
         }
 
