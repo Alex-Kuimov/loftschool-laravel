@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EditProduct;
+use App\Models\Product;
 
 use Illuminate\Http\Request;
 
@@ -10,7 +10,7 @@ class EditProductController extends Controller
 {
     public function editProduct()
     {
-        $allProduct = EditProduct::selectAllProduct();
+        $allProduct = Product::selectAllProduct();
         return view('admin/editProduct', ['allProduct' => $allProduct]);
     }
 }

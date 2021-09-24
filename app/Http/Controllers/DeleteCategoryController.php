@@ -3,17 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\DeleteCategory;
+use App\Models\Category;
 
 class DeleteCategoryController extends Controller
 {
     public function deleteCategory(Request $request)
     {
-        $allCategory = DeleteCategory::selectCategory();
+        $allCategory = Category::selectCategory();
         $submit = $request->input('submit');
         $id = $request->input('id');
         if (!empty($submit)) {
-            DeleteCategory::deleteCategory($id);
+            Category::deleteCategory($id);
             return redirect()->route('successfulAdmin');
         }
         return view('admin/deleteCategory', [

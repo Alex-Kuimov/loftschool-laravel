@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\EditSelectCategory;
+use App\Models\Category;
 
 class EditSelectCategoryController extends Controller
 {
     public function editSelectCategory(Request $request)
     {
         $id = $request->input('id');
-        $changeCategory = EditSelectCategory::selectChangeCategory($id);
+        $changeCategory = Category::selectChangeCategory($id);
         $changeTitle = $changeCategory['0']->title;
         $changeDescription = $changeCategory['0']->description;
         $changeId = $changeCategory['0']->id;
@@ -19,7 +19,7 @@ class EditSelectCategoryController extends Controller
             $title = $request->input('title');
             $description = $request->input('description');
             $categoryId = $request->input('id');
-            EditSelectCategory::updateChangeCategory($categoryId, $title, $description);
+            Category::updateChangeCategory($categoryId, $title, $description);
             return redirect()->route('successfulAdmin');
         } else {
             if (!empty($request->input('submit'))) {

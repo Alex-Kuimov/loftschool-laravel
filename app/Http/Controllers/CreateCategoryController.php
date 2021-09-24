@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CreateCategory;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CreateCategoryController extends Controller
@@ -13,7 +13,7 @@ class CreateCategoryController extends Controller
         if (!empty($request->input('title') && $request->input('description'))) {
             $title = $request->input('title');
             $description = $request->input('description');
-            CreateCategory::insertCategory($title, $description);
+            Category::insertCategory($title, $description);
             return redirect()->route('successfulAdmin');
         } else {
             if (!empty($request->input('submit'))) {

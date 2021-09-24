@@ -2,16 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\EditSelectCategory;
 use Illuminate\Http\Request;
-use App\Models\EditSelectProduct;
+use App\Models\Product;
 
 class EditSelectProductController extends Controller
 {
     public function editSelectProduct(Request $request)
     {
         $id = $request->input('id');
-        $changeProduct = EditSelectProduct::selectChangeProduct($id);
+        $changeProduct = Product::selectChangeProduct($id);
         $change = [];
         $change[] = $changeProduct['0']->title;
         $change[] = $changeProduct['0']->price;
@@ -39,7 +38,7 @@ class EditSelectProductController extends Controller
             $image = $product['4'];
             $description = $product['5'];
             $productId = $product['6'];
-            EditSelectProduct::updateChangeProduct($productId, $title, $category_id, $price, $image, $description);
+            Product::updateChangeProduct($productId, $title, $category_id, $price, $image, $description);
             return redirect()->route('successfulAdmin');
         }
         return view('admin/editSelectProduct', [
