@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Product;
 use App\Models\Buy;
+use Illuminate\Http\Request;
 use Swift_Mailer;
 use Swift_Message;
 use Swift_SmtpTransport;
@@ -14,7 +15,7 @@ class BuyController extends Controller
     {
         $id = $request->input('id');
         $user = $request->user();
-        $product = Buy::productFromOrders($id);
+        $product = Product::find($id);
         $error = [];
         $name = trim(htmlspecialchars($request->input("name")));
         $product_id = trim(htmlspecialchars($request->input("id")));
@@ -27,7 +28,14 @@ class BuyController extends Controller
             $error[] = "Введите email";
         }
         if (empty($error)) {
-            Buy::orderInsert($product_id, $email, $name);
+            //Buy::orderInsert($product_id, $email, $name);
+
+            Buy::create([
+                'product_id' => $product_id,
+                'email' => $email,
+                'name' => $name,
+            ]);
+
             $successful[] = "Ваш заказ принят";
             /*$transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
             $transport->setUsername('user');
@@ -56,7 +64,7 @@ class BuyController extends Controller
     {
         $id = $request->input('id');
         $user = $request->user();
-        $product = Buy::productFromOrders($id);
+        $product = Product::find($id);
 
         return view('buy',
             ['id' => $id,

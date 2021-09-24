@@ -1,8 +1,8 @@
 @extends('layouts.app')
 @section('content')
     <h3>Ваш заказ</h3>
-    <p>Игра:{{$product['0']->title}}</p>
-    <p>Цена:{{$product['0']->price}}</p>
+    <p>Игра:{{$product->title}}</p>
+    <p>Цена:{{$product->price}}</p>
     <h3>Оставте свои данные, чтобы наш менеджер связался с вами:</h3>
     @if(isset($user))
         <form action="{{route('sell')}}" method="post">
