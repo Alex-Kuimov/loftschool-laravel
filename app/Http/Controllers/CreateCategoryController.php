@@ -13,7 +13,12 @@ class CreateCategoryController extends Controller
         if (!empty($request->input('title') && $request->input('description'))) {
             $title = $request->input('title');
             $description = $request->input('description');
-            Category::insertCategory($title, $description);
+
+            Category::create([
+                'title' => $title,
+                'description' => $description,
+            ]);
+
             return redirect()->route('successfulAdmin');
         } else {
             if (!empty($request->input('submit'))) {

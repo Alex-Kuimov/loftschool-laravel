@@ -9,8 +9,7 @@ class AllOrdersController extends Controller
 {
     public function allOrders()
     {
-        $orders = Orders::selectOrders();
-        //dd($orders);
+        $orders = Orders::all();
         return view('admin/allOrders', ['orders' => $orders]);
     }
 }

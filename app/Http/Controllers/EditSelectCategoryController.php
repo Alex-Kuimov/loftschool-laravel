@@ -10,16 +10,20 @@ class EditSelectCategoryController extends Controller
     public function editSelectCategory(Request $request)
     {
         $id = $request->input('id');
-        $changeCategory = Category::selectChangeCategory($id);
-        $changeTitle = $changeCategory['0']->title;
-        $changeDescription = $changeCategory['0']->description;
-        $changeId = $changeCategory['0']->id;
+        $changeCategory = Category::find($id);
+        $changeTitle = $changeCategory->title;
+        $changeDescription = $changeCategory->description;
+        $changeId = $changeCategory->id;
         $error = [];
         if (!empty($request->input('title') && $request->input('description'))) {
             $title = $request->input('title');
             $description = $request->input('description');
-            $categoryId = $request->input('id');
-            Category::updateChangeCategory($categoryId, $title, $description);
+
+            $category = Category::find($id);
+            $category->title = $title;
+            $category->description = $description;
+            $category->save();
+
             return redirect()->route('successfulAdmin');
         } else {
             if (!empty($request->input('submit'))) {

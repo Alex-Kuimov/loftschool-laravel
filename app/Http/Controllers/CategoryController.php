@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Orders;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -11,7 +12,8 @@ class CategoryController extends Controller
     {
         $category = $request->input('category');
         $id = $request->input('id');
-        $orders = Category::OrdersFromCategory($id);
+        $orders = Orders::all();
+
         return view('orders', [
             'product' => $category,
             'id' => $id,
