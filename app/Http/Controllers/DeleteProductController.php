@@ -9,11 +9,12 @@ class DeleteProductController extends Controller
 {
     public function deleteProduct(Request $request)
     {
-        $allProduct = Product::selectProduct();
+        $allProduct = Product::all();
         $submit = $request->input('submit');
         $id = $request->input('id');
         if (!empty($submit)) {
-            Product::deleteProduct($id);
+            $product = Product::find($id);
+            $product->delete();
             return redirect()->route('successfulAdmin');
         }
         return view('admin/deleteProduct', [

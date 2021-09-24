@@ -10,7 +10,7 @@ class EditProductController extends Controller
 {
     public function editProduct()
     {
-        $allProduct = Product::selectAllProduct();
+        $allProduct = Product::all();
         return view('admin/editProduct', ['allProduct' => $allProduct]);
     }
 }

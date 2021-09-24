@@ -10,7 +10,7 @@ class ProductController extends Controller
     public function product(Request $request)
     {
         $id = $request->input("id");
-        $order = Product::productFromBase($id);
+        $order = Product::find($id);
         return view('product', ['order' => $order, 'id' => $id]);
     }
 }

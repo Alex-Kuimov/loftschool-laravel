@@ -19,7 +19,15 @@ class CreateProductController extends Controller
             $price = $request->input('price');
             $image = $request->input('image');
             $description = $request->input('description');
-            Product::insertProduct($title, $category_id, $price, $image, $description);
+
+            Product::create([
+                'title' => $title,
+                'category_id' => $category_id,
+                'price' => $price,
+                'image' => $image,
+                'description' => $description,
+            ]);
+
             return redirect()->route('successfulAdmin');
         } else {
             if (!empty($request->input('submit'))) {

@@ -10,14 +10,14 @@ class EditSelectProductController extends Controller
     public function editSelectProduct(Request $request)
     {
         $id = $request->input('id');
-        $changeProduct = Product::selectChangeProduct($id);
+        $changeProduct = Product::find($id);
         $change = [];
-        $change[] = $changeProduct['0']->title;
-        $change[] = $changeProduct['0']->price;
-        $change[] = $changeProduct['0']->category_id;
-        $change[] = $changeProduct['0']->image;
-        $change[] = $changeProduct['0']->description;
-        $change[] = $changeProduct['0']->id;
+        $change[] = $changeProduct->title;
+        $change[] = $changeProduct->price;
+        $change[] = $changeProduct->category_id;
+        $change[] = $changeProduct->image;
+        $change[] = $changeProduct->description;
+        $change[] = $changeProduct->id;
         $error = [];
         $product = [];
         $input = $request->except('submit');
@@ -37,8 +37,15 @@ class EditSelectProductController extends Controller
             $price = $product['3'];
             $image = $product['4'];
             $description = $product['5'];
-            $productId = $product['6'];
-            Product::updateChangeProduct($productId, $title, $category_id, $price, $image, $description);
+
+            $product = Product::find($id);
+            $product->title = $title;
+            $product->category_id = $category_id;
+            $product->price = $price;
+            $product->image = $image;
+            $product->description = $description;
+            $product->save();
+
             return redirect()->route('successfulAdmin');
         }
         return view('admin/editSelectProduct', [
