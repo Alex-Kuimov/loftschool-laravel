@@ -11,6 +11,12 @@ class CreateCategoryController extends Controller
     {
         $error = [];
         if (!empty($request->input('title') && $request->input('description'))) {
+
+            $validated = $request->validate([
+                'title' => 'required',
+                'description ' => 'required',
+            ]);
+
             $title = $request->input('title');
             $description = $request->input('description');
 

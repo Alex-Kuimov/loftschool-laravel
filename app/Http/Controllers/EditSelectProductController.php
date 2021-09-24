@@ -9,8 +9,10 @@ class EditSelectProductController extends Controller
 {
     public function editSelectProduct(Request $request)
     {
+
         $id = $request->input('id');
         $changeProduct = Product::find($id);
+
         $change = [];
         $change[] = $changeProduct->title;
         $change[] = $changeProduct->price;

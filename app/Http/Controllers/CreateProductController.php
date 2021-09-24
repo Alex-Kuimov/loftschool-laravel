@@ -11,14 +11,25 @@ class CreateProductController extends Controller
     public function createProduct(Request $request)
     {
         $error = [];
+
         if (!empty($request->input('title') && $request->input('category_id'))
             && $request->input('price') && $request->input('image')
             && $request->input('description')) {
+
+            $validated = $request->validate([
+                'title' => 'required',
+                'category_id ' => 'required',
+                'price ' => 'required',
+                'image ' => 'required',
+                'description ' => 'required',
+            ]);
+
             $title = $request->input('title');
             $category_id = $request->input('category_id');
             $price = $request->input('price');
             $image = $request->input('image');
             $description = $request->input('description');
+
 
             Product::create([
                 'title' => $title,

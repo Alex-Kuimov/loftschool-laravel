@@ -13,23 +13,30 @@ class BuyController extends Controller
 {
     public function sell(Request $request)
     {
-        $id = $request->input('id');
+
+       $validated = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+       ]);
+
+        $name = $request->input("name");
+        $product_id = $request->input("id");
+        $email = $request->input("email");
+
+
         $user = $request->user();
-        $product = Product::find($id);
+        $product = Product::find($product_id);
         $error = [];
-        $name = trim(htmlspecialchars($request->input("name")));
-        $product_id = trim(htmlspecialchars($request->input("id")));
-        $email = trim(htmlspecialchars($request->input("email")));
 
         if (empty($name)) {
             $error[] = "Введите имя";
         }
+
         if (empty($email)) {
             $error[] = "Введите email";
         }
-        if (empty($error)) {
-            //Buy::orderInsert($product_id, $email, $name);
 
+        if (empty($error)) {
             Buy::create([
                 'product_id' => $product_id,
                 'email' => $email,
@@ -37,6 +44,7 @@ class BuyController extends Controller
             ]);
 
             $successful[] = "Ваш заказ принят";
+
             /*$transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
             $transport->setUsername('user');
             $transport->setPassword('password');
@@ -52,7 +60,7 @@ class BuyController extends Controller
         }
 
         return view('buy',
-            ['id' => $id,
+            ['id' => $product_id,
                 'product' => $product,
                 'user' => $user,
                 'error' => $error
