@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class CreateProductController extends Controller
 {
 
-    public function createProduct(Request $request)
+    public function createProduct(Request $request, Product $model)
     {
         $error = [];
 
@@ -30,8 +30,7 @@ class CreateProductController extends Controller
             $image = $request->input('image');
             $description = $request->input('description');
 
-
-            Product::create([
+            $model::create([
                 'title' => $title,
                 'category_id' => $category_id,
                 'price' => $price,

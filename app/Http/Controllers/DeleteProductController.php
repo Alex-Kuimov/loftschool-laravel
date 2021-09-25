@@ -7,13 +7,13 @@ use App\Models\Product;
 
 class DeleteProductController extends Controller
 {
-    public function deleteProduct(Request $request)
+    public function deleteProduct(Request $request, Product $model)
     {
-        $allProduct = Product::all();
+        $allProduct = $model::paginate(10);
         $submit = $request->input('submit');
         $id = $request->input('id');
         if (!empty($submit)) {
-            $product = Product::find($id);
+            $product = $model::find($id);
             $product->delete();
             return redirect()->route('successfulAdmin');
         }

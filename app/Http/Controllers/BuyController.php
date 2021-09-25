@@ -11,7 +11,7 @@ use Swift_SmtpTransport;
 
 class BuyController extends Controller
 {
-    public function sell(Request $request)
+    public function sell(Request $request, Buy $model)
     {
 
        $validated = $request->validate([
@@ -37,7 +37,7 @@ class BuyController extends Controller
         }
 
         if (empty($error)) {
-            Buy::create([
+            $model::create([
                 'product_id' => $product_id,
                 'email' => $email,
                 'name' => $name,
@@ -45,7 +45,8 @@ class BuyController extends Controller
 
             $successful[] = "Ваш заказ принят";
 
-            /*$transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
+            /*
+            $transport = new Swift_SmtpTransport('smtp.mail.ru', 465);
             $transport->setUsername('user');
             $transport->setPassword('password');
             $transport->setEncryption('SSL');
@@ -55,7 +56,9 @@ class BuyController extends Controller
             $message->setFrom(['fromMail' => 'fromMail']);
             $message->addTo('toMail', 'toMail');
             $message->setBody("Пользователь с email " . $email . " , заказал игру с id - " . $product_id);
-            $mailer->send($message);*/
+            $mailer->send($message);
+            */
+
             return redirect()->route('successful');
         }
 
@@ -68,11 +71,11 @@ class BuyController extends Controller
         );
     }
 
-    public function buy(Request $request)
+    public function buy(Request $request, Product $model)
     {
         $id = $request->input('id');
         $user = $request->user();
-        $product = Product::find($id);
+        $product = $model::find($id);
 
         return view('buy',
             ['id' => $id,

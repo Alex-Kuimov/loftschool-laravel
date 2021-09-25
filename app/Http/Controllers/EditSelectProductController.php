@@ -7,11 +7,11 @@ use App\Models\Product;
 
 class EditSelectProductController extends Controller
 {
-    public function editSelectProduct(Request $request)
+    public function editSelectProduct(Request $request, Product $model)
     {
 
         $id = $request->input('id');
-        $changeProduct = Product::find($id);
+        $changeProduct = $model::find($id);
 
         $change = [];
         $change[] = $changeProduct->title;
@@ -40,7 +40,7 @@ class EditSelectProductController extends Controller
             $image = $product['4'];
             $description = $product['5'];
 
-            $product = Product::find($id);
+            $product = $model::find($id);
             $product->title = $title;
             $product->category_id = $category_id;
             $product->price = $price;

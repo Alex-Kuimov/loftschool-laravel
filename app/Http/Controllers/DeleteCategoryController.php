@@ -7,13 +7,13 @@ use App\Models\Category;
 
 class DeleteCategoryController extends Controller
 {
-    public function deleteCategory(Request $request)
+    public function deleteCategory(Request $request, Category $model)
     {
-        $allCategory = Category::all();
+        $allCategory = $model::paginate(10);
         $submit = $request->input('submit');
         $id = $request->input('id');
         if (!empty($submit)) {
-            $category = Category::find($id);
+            $category = $model::find($id);
             $category->delete();
 
             return redirect()->route('successfulAdmin');

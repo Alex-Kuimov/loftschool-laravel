@@ -8,11 +8,11 @@ use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
-    public function orders(Request $request)
+    public function orders(Request $request, Orders $model)
     {
         $category = $request->input('category');
         $id = $request->input('id');
-        $orders = Orders::all();
+        $orders = $model::all();
 
         return view('orders', [
             'product' => $category,

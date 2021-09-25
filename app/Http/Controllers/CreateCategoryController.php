@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class CreateCategoryController extends Controller
 {
-    public function createCategory(Request $request)
+    public function createCategory(Request $request, Category $model)
     {
         $error = [];
         if (!empty($request->input('title') && $request->input('description'))) {
@@ -20,7 +20,7 @@ class CreateCategoryController extends Controller
             $title = $request->input('title');
             $description = $request->input('description');
 
-            Category::create([
+            $model::create([
                 'title' => $title,
                 'description' => $description,
             ]);
