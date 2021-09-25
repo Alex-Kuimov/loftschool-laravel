@@ -10,7 +10,7 @@ class EditSelectCategoryController extends Controller
     public function editSelectCategory(Request $request, Category $model)
     {
         $id = $request->input('id');
-        $changeCategory = $model::find($id);
+        $changeCategory = $model->find($id);
         $changeTitle = $changeCategory->title;
         $changeDescription = $changeCategory->description;
         $changeId = $changeCategory->id;
@@ -19,7 +19,7 @@ class EditSelectCategoryController extends Controller
             $title = $request->input('title');
             $description = $request->input('description');
 
-            $category = $model::find($id);
+            $category = $model->find($id);
             $category->title = $title;
             $category->description = $description;
             $category->save();

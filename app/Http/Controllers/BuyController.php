@@ -37,7 +37,7 @@ class BuyController extends Controller
         }
 
         if (empty($error)) {
-            $model::create([
+            $model->create([
                 'product_id' => $product_id,
                 'email' => $email,
                 'name' => $name,
@@ -75,7 +75,7 @@ class BuyController extends Controller
     {
         $id = $request->input('id');
         $user = $request->user();
-        $product = $model::find($id);
+        $product = $model->find($id);
 
         return view('buy',
             ['id' => $id,

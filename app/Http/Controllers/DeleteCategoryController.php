@@ -9,11 +9,11 @@ class DeleteCategoryController extends Controller
 {
     public function deleteCategory(Request $request, Category $model)
     {
-        $allCategory = $model::paginate(10);
+        $allCategory = $model->paginate(10);
         $submit = $request->input('submit');
         $id = $request->input('id');
         if (!empty($submit)) {
-            $category = $model::find($id);
+            $category = $model->find($id);
             $category->delete();
 
             return redirect()->route('successfulAdmin');

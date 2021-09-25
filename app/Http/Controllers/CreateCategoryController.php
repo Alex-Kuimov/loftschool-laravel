@@ -20,7 +20,7 @@ class CreateCategoryController extends Controller
             $title = $request->input('title');
             $description = $request->input('description');
 
-            $model::create([
+            $model->create([
                 'title' => $title,
                 'description' => $description,
             ]);

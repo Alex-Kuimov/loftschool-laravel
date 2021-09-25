@@ -12,7 +12,7 @@ class CategoryController extends Controller
     {
         $category = $request->input('category');
         $id = $request->input('id');
-        $orders = $model::all();
+        $orders = $model->all();
 
         return view('orders', [
             'product' => $category,
