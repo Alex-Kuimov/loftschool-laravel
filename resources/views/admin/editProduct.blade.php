@@ -1,4 +1,15 @@
 Изменить товар
+
+@if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ route('product.update', $product->id) }}" method="post">
     {{ csrf_field()}}
     @method('PUT')

@@ -5,21 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Orders;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use \App\Http\Requests\CategoryRequest;
 
 class AdminCategoryController extends Controller
 {
-    public function orders(Request $request, Orders $model)
-    {
-        $category = $request->input('category');
-        $id = $request->input('id');
-        $orders = $model->all();
-
-        return view('orders', [
-            'product' => $category,
-            'id' => $id,
-            'orders' => $orders
-        ]);
-    }
 
     public function index(Category $model)
     {
@@ -27,22 +17,21 @@ class AdminCategoryController extends Controller
         return view('admin/listCategory', ['categories' => $categories]);
     }
 
-
-    public function create(Request $request, Category $model)
+    public function show(CategoryRequest $request, Product $model)
     {
-        if( count( $request->all() ) > 0 ) {
+        $category = $model->findOrFail( $request->id );
+        return view('admin/editCategory', [ 'category' => $category ] );
+    }
 
-            $title = $request->input('title');
-            $description = $request->input('description');
 
-            $model->create([
-                'title' => $title,
-                'description' => $description,
-            ]);
+    public function create(CategoryRequest $request, Category $model)
+    {
+        $validated = $request->validated();
+        $model->create( $validated );
+        return redirect()->route('category.index');
+    }
 
-            return redirect()->route('successfulAdmin');
-        }
-
+    public function form(){
         return view('admin/createCategory');
     }
 
@@ -52,13 +41,13 @@ class AdminCategoryController extends Controller
         return view('admin/editCategory', [ 'category' => $category ] );
     }
 
-    public function update(Request $request, Category $model)
+    public function update(CategoryRequest $request, Category $model)
     {
-        $category = $model->findOrFail( $request->input('id' ) );
-        $category->update( $request->all() );
+        $validated = $request->validated();
+        $category = $model->findOrFail( $request->id );
+        $category->update( $validated );
 
-        return redirect()->route('successfulAdmin');
-
+        return redirect()->route( 'category.edit', $request->id );
     }
 
     public function destroy($id, Category $model)

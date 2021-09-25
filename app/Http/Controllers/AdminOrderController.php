@@ -9,7 +9,7 @@ class AdminOrderController extends Controller
 {
     public function index()
     {
-        $orders = Orders::all();
+        $orders = Orders::paginate(20);
         return view('admin/listOrder', ['orders' => $orders]);
     }
 }

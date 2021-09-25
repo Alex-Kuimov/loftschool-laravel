@@ -1,4 +1,5 @@
 Создать категорию
+
 <form action="{{route('category.create')}}" method="get">
     {{ csrf_field()}}
     <p>Введите название категории</p>

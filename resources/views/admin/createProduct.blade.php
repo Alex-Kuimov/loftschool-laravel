@@ -1,4 +1,5 @@
 Создать товар
+
 <form action="{{route('product.create')}}" method="get">
     {{ csrf_field()}}
 

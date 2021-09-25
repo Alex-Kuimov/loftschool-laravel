@@ -32,7 +32,9 @@ Route::middleware(['admin'])->group(function () {
     })->name('successfulAdmin');
 
     Route::resource('/admin/product', 'AdminProductController');
+    Route::get('/admin/create/product', 'AdminProductController@form')->name('product.form');
     Route::resource('/admin/category', 'AdminCategoryController');
+    Route::get('/admin/create/category', 'AdminCategoryController@form')->name('category.form');
     Route::resource('/admin/order', 'AdminOrderController');
 });
 

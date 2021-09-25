@@ -1,4 +1,15 @@
 Изменить категорию
+
+@if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
+
 <form action="{{ route('category.update', $category->id) }}" method="post">
     {{ csrf_field()}}
     @method('PUT')
