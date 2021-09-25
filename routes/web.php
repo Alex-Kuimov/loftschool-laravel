@@ -14,21 +14,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/*Route::get('/', function () {
-    return view('welcome');
-});*/
-
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/', 'IndexController@index')->name('index');
 Route::get('/registration', 'IndexController@registration')->name('registration');
-//Route::get('/orders', 'CategoryController@orders')->name('orders');
-//Route::get('/product', 'ProductController@product')->name('product');
-
-Route::get('/buy', 'BuyController@buy')->name('buy');
-Route::post('/buy','BuyController@sell')->name('sell');
+Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/successful','SuccessfulController@successful')->name('successful');
+
+Route::resource('order', 'OrderController');
+Route::resource('product', 'ProductController');
 
 Route::middleware(['admin'])->group(function () {
     Route::get('/admin','AdminController@admin')->name('admin');
@@ -37,11 +31,10 @@ Route::middleware(['admin'])->group(function () {
         return view('admin/successful');
     })->name('successfulAdmin');
 
-    Route::resource('product', 'ProductController');
-    Route::resource('category', 'CategoryController');
-    Route::resource('order', 'OrderController');
+    Route::resource('/admin/product', 'AdminProductController');
+    Route::resource('/admin/category', 'AdminCategoryController');
+    Route::resource('/admin/order', 'AdminOrderController');
 });
 
 Auth::routes();
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

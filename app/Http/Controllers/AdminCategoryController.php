@@ -6,7 +6,7 @@ use App\Models\Category;
 use App\Models\Orders;
 use Illuminate\Http\Request;
 
-class CategoryController extends Controller
+class AdminCategoryController extends Controller
 {
     public function orders(Request $request, Orders $model)
     {

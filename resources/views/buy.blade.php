@@ -5,7 +5,7 @@
     <p>Цена:{{$product->price}}</p>
     <h3>Оставте свои данные, чтобы наш менеджер связался с вами:</h3>
     @if(isset($user))
-        <form action="{{route('sell')}}" method="post">
+        <form action="/order/create" method="get">
             {{ csrf_field()}}
             <p>Ваше имя</p>
             <input type="text" value="{{$user->name}}" name="name"><br>
@@ -16,7 +16,7 @@
             <input type="submit">
         </form>
     @else
-        <form action="{{route('sell')}}" method="post">
+        <form action="/order/create" method="get">
             {{ csrf_field()}}
             <p>Ваше имя</p>
             <input type="text" name="name"><br>
