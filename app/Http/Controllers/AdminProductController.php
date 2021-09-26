@@ -2,30 +2,33 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Product;
-use Illuminate\Support\Facades\Validator;
 use \App\Http\Requests\ProductRequest;
 
 class AdminProductController extends Controller
 {
+
+    private $paginate = 10;
+
     public function index(Product $model)
     {
-        $products = $model->all();
+        $products = $model->paginate($this->paginate);
         return view('admin/listProduct', [ 'products' => $products ] );
     }
 
-    public function show(ProductRequest $request, Product $model)
+    public function show(Product $product)
     {
-        $product = $model->findOrFail( $request->id );
         return view('admin/editProduct', [ 'product' => $product ] );
     }
 
-    public function create( ProductRequest $request, Product $model )
+    public function create( ProductRequest $request, Product $product )
     {
         $validated = $request->validated();
-        $model->create( $validated );
-        return redirect()->route('product.index');
+        $product->create( $validated );
+
+        $status = __('messages.created');
+
+        return redirect()->action([AdminProductController::class, 'form'], [ 'product' => $product ])->with('status', $status);
     }
 
     public function form(){
@@ -44,7 +47,9 @@ class AdminProductController extends Controller
         $product = $model->findOrFail( $request->id );
         $product->update( $validated );
 
-        return redirect()->route( 'product.edit', $request->id );
+        $status = __('messages.updated');
+
+        return redirect()->action([AdminProductController::class, 'edit'], [ 'product' => $product ])->with('status', $status);
     }
 
     public function destroy($id, Product $model)

@@ -1,5 +1,19 @@
 Создать категорию
+@if ($errors->any())
+    <div>
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
+@if (session('status'))
+    <div>
+        {{ session('status') }}
+    </div>
+@endif
 <form action="{{route('category.create')}}" method="get">
     {{ csrf_field()}}
     <p>Введите название категории</p>

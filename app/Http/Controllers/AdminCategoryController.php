@@ -3,41 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\Orders;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 use \App\Http\Requests\CategoryRequest;
 
 class AdminCategoryController extends Controller
 {
+    private $paginate = 10;
 
     public function index(Category $model)
     {
-        $categories = $model->all();
+        $categories = $model->paginate($this->paginate);
         return view('admin/listCategory', ['categories' => $categories]);
     }
 
-    public function show(CategoryRequest $request, Product $model)
+    public function show(Category $category)
     {
-        $category = $model->findOrFail( $request->id );
         return view('admin/editCategory', [ 'category' => $category ] );
     }
 
 
-    public function create(CategoryRequest $request, Category $model)
+    public function create(CategoryRequest $request, Category $category)
     {
         $validated = $request->validated();
-        $model->create( $validated );
-        return redirect()->route('category.index');
+        $category->create( $validated );
+
+        $status = __('messages.created');
+
+        return redirect()->action([AdminCategoryController::class, 'form'], [ 'category' => $category ])->with('status', $status);
     }
 
     public function form(){
         return view('admin/createCategory');
     }
 
-    public function edit($id, Category $model)
+    public function edit(Category $category)
     {
-        $category = $model->findOrFail($id);
         return view('admin/editCategory', [ 'category' => $category ] );
     }
 
@@ -47,14 +46,16 @@ class AdminCategoryController extends Controller
         $category = $model->findOrFail( $request->id );
         $category->update( $validated );
 
-        return redirect()->route( 'category.edit', $request->id );
+        $status = __('messages.updated');
+
+        return redirect()->action([AdminCategoryController::class, 'edit'], [ 'category' => $category ])->with('status', $status);
     }
 
     public function destroy($id, Category $model)
     {
         $category = $model->findOrFail($id);
         $category->delete();
-        return redirect()->route('successfulAdmin');
+        return redirect()->route('category.index');
     }
 
 }

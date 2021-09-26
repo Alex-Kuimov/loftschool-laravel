@@ -10,6 +10,12 @@
     </div>
 @endif
 
+@if (session('status'))
+    <div>
+        {{ session('status') }}
+    </div>
+@endif
+
 <form action="{{ route('product.update', $product->id) }}" method="post">
     {{ csrf_field()}}
     @method('PUT')
